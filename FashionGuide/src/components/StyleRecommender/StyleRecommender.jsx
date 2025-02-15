@@ -1,6 +1,26 @@
 import React, { useState } from "react";
 import "./StyleRecommender.css";
 
+let lastRequestTime = 0; // Track last request time
+
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const fetchWithRetry = async (url, options, retries = 3, delayMs = 5000) => {
+  for (let attempt = 0; attempt < retries; attempt++) {
+    const response = await fetch(url, options);
+
+    if (response.status === 429) {
+      console.warn(`429 Error: Retrying in ${delayMs}ms... (Attempt ${attempt + 1})`);
+      await delay(delayMs);
+      delayMs *= 2; // Increase delay exponentially (5s -> 10s -> 20s)
+    } else {
+      return response;
+    }
+  }
+
+  throw new Error("Too many requests. Please try again later.");
+};
+
 const StyleRecommender = () => {
   const [formData, setFormData] = useState({
     gender: "",
@@ -24,23 +44,20 @@ const StyleRecommender = () => {
     setError("");
     setRecommendation("");
 
-    const isFormValid = Object.values(formData).every((val) => val.trim() !== "");
-    if (!isFormValid) {
-      setError("Please fill in all fields before submitting.");
+    if (!import.meta.env.VITE_OPENAI_API_KEY) {
+      setError("API Key is missing. Make sure it's defined in the .env file.");
       setLoading(false);
       return;
     }
 
-    console.log("Submitting form with data:", formData);
-
     const prompt = `Suggest an outfit for a ${formData.gender} attending a ${formData.occasion} event in ${formData.weather} weather, with a ${formData.bodyType} body type, who prefers ${formData.stylePreference} style.`;
 
     try {
-      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      const response = await fetchWithRetry("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.VITE_OPENAI_API_KEY}`,
+          Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
         },
         body: JSON.stringify({
           model: "gpt-3.5-turbo",
@@ -49,12 +66,10 @@ const StyleRecommender = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`API Error: ${response.statusText}`);
+        throw new Error(`API Error: ${response.status} - ${response.statusText}`);
       }
 
       const data = await response.json();
-      console.log("API Response:", data);
-
       if (!data.choices || data.choices.length === 0) {
         throw new Error("No recommendation received.");
       }
@@ -66,8 +81,6 @@ const StyleRecommender = () => {
       setLoading(false);
     }
   };
-
-  const isFormValid = Object.values(formData).every((val) => val.trim() !== "");
 
   return (
     <div className="style-recommender-container">
@@ -93,7 +106,7 @@ const StyleRecommender = () => {
         <label>Style Preference:</label>
         <input type="text" name="stylePreference" value={formData.stylePreference} onChange={handleChange} placeholder="Casual, Chic, Sporty, etc." required />
 
-        <button type="submit" className="submit-button" disabled={!isFormValid || loading}>
+        <button type="submit" className="submit-button" disabled={loading}>
           {loading ? "Fetching..." : "Get Recommendation"}
         </button>
       </form>
