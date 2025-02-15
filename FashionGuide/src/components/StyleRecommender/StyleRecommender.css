@@ -1,0 +1,128 @@
+/* Import Cute Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Quicksand:wght@400;600&display=swap');
+
+body {
+    font-family: 'Poppins', 'Quicksand', sans-serif;
+    background: linear-gradient(135deg, #000000, #700c6f);
+    color: #444;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Cute StyleRecommender Container */
+.style-recommender-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 500px; /* Wider form */
+    text-align: center;
+    position: relative;
+    top: 10px; /* Slightly adjusted position */
+}
+
+/* Title */
+.title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ff69b4;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+/* Form Styling */
+.form-container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 480px; /* Wider container */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 8px 18px rgba(255, 182, 193, 0.4);
+    border: 2px solid #ff69b4;
+}
+
+/* Labels */
+label {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ff69b4;
+    align-self: flex-start;
+    margin-bottom: 5px;
+}
+
+/* Input and Select Boxes */
+input, select {
+    padding: 10px;
+    border: 2px solid #ff69b4;
+    border-radius: 8px;
+    font-size: 1rem;
+    width: 100%;
+    background: #fff;
+    transition: all 0.3s ease-in-out;
+    text-align: center;
+}
+
+/* Input Focus Effect */
+input:focus, select:focus {
+    outline: none;
+    border-color: #ff1493;
+    box-shadow: 0 0 10px rgba(255, 20, 147, 0.3);
+}
+
+/* Cute Submit Button */
+.submit-button {
+    padding: 12px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, #ff69b4, #ff1493);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    margin-top: 10px;
+    box-shadow: 0 5px 15px rgba(255, 20, 147, 0.3);
+    width: 100%;
+    max-width: 300px; /* Ensures button fits */
+}
+
+.submit-button:hover {
+    background: linear-gradient(135deg, #ff1493, #c71585);
+    transform: scale(1.05);
+}
+
+/* Recommendation Box */
+.recommendation-box {
+    margin-top: 15px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    width: 100%;
+    max-width: 450px; /* Matches form width */
+    text-align: center;
+    box-shadow: 0 8px 18px rgba(255, 105, 180, 0.3);
+    border: 2px solid #ff69b4;
+}
+
+/* Recommendation Title */
+.recommendation-box h2 {
+    font-size: 1.5rem;
+    color: #ff1493;
+    margin-bottom: 8px;
+}
+
+/* Recommendation Text */
+.recommendation-box p {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #444;
+}

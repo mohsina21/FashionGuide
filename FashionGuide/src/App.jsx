@@ -1,9 +1,14 @@
-import { useState } from 'react'
-import Home from './components/Home/Home'
+import { Routes, Route } from "react-router-dom";
+import Home from "./components/Home/Home";
+import StyleRecommender from "./components/StyleRecommender/StyleRecommender";
+
 function App() {
-  return(
-  <Home />
-  )
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/style-recommendation" element={<StyleRecommender />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;
