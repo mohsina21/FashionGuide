@@ -22,6 +22,16 @@ const StyleRecommender = () => {
     e.preventDefault();
     setLoading(true);
     setError("");
+    setRecommendation("");
+
+    const isFormValid = Object.values(formData).every((val) => val.trim() !== "");
+    if (!isFormValid) {
+      setError("Please fill in all fields before submitting.");
+      setLoading(false);
+      return;
+    }
+
+    console.log("Submitting form with data:", formData);
 
     const prompt = `Suggest an outfit for a ${formData.gender} attending a ${formData.occasion} event in ${formData.weather} weather, with a ${formData.bodyType} body type, who prefers ${formData.stylePreference} style.`;
 
@@ -30,12 +40,11 @@ const StyleRecommender = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`, // Use .env key
+          Authorization: `Bearer ${process.env.VITE_OPENAI_API_KEY}`,
         },
         body: JSON.stringify({
           model: "gpt-3.5-turbo",
-          messages: [{ role: "system", content: "You are a fashion expert." }, { role: "user", content: prompt }],
-          max_tokens: 150,
+          messages: [{ role: "user", content: prompt }],
         }),
       });
 
@@ -44,9 +53,10 @@ const StyleRecommender = () => {
       }
 
       const data = await response.json();
+      console.log("API Response:", data);
 
       if (!data.choices || data.choices.length === 0) {
-        throw new Error("Invalid response from API.");
+        throw new Error("No recommendation received.");
       }
 
       setRecommendation(data.choices[0].message.content);
@@ -56,6 +66,8 @@ const StyleRecommender = () => {
       setLoading(false);
     }
   };
+
+  const isFormValid = Object.values(formData).every((val) => val.trim() !== "");
 
   return (
     <div className="style-recommender-container">
@@ -81,7 +93,7 @@ const StyleRecommender = () => {
         <label>Style Preference:</label>
         <input type="text" name="stylePreference" value={formData.stylePreference} onChange={handleChange} placeholder="Casual, Chic, Sporty, etc." required />
 
-        <button type="submit" className="submit-button" disabled={loading}>
+        <button type="submit" className="submit-button" disabled={!isFormValid || loading}>
           {loading ? "Fetching..." : "Get Recommendation"}
         </button>
       </form>
