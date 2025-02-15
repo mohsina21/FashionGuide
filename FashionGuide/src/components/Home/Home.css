@@ -1,0 +1,106 @@
+/* Home.css */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+  }
+  
+  .home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background: linear-gradient(135deg, #ff7eb3, #080008, #800080);
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
+  }
+  
+  .home-title {
+    font-size: 4rem;
+    font-weight: 800;
+    color: white;
+    text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.6);
+    margin-bottom: 20px;
+  }
+  
+  .highlight {
+    color: #6d11af;
+  }
+  
+  .home-text {
+    font-size: 1.5rem;
+    max-width: 600px;
+    color: #f5f5f5;
+    margin-bottom: 30px;
+    font-weight: 400;
+  }
+  
+  .home-button {
+    padding: 15px 40px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: black;
+    background: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s ease;
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
+  }
+  
+  .home-button:hover {
+    background: #e6e6e6;
+    transform: scale(1.15);
+  }
+  
+  .home-button:active {
+    transform: scale(0.95);
+  }
+  
+  .floating-element {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(15px);
+    opacity: 0.6;
+  }
+  
+  .white {
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.3);
+    top: 15%;
+    left: 15%;
+  }
+  
+  .yellow {
+    width: 70px;
+    height: 70px;
+    background: rgba(255, 215, 0, 0.5);
+    bottom: 20%;
+    right: 15%;
+  }
+  
+  .pink {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 105, 180, 0.7);
+    top: 45%;
+    left: 35%;
+  }
+  
+  .black {
+    width: 50px;
+    height: 50px;
+    background: rgba(0, 0, 0, 0.6);
+    bottom: 25%;
+    right: 30%;
+  }
+  
