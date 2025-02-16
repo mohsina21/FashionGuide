@@ -1,23 +1,27 @@
 import React, { useState } from "react";
 import "./StyleRecommender.css";
 
-let lastRequestTime = 0; // Track last request time
+const API_URL = "https://api.openai.com/v1/chat/completions";
+const API_KEY = import.meta.env.VITE_OPENAI_API_KEY; // Ensure it's securely stored in .env
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const fetchWithRetry = async (url, options, retries = 3, delayMs = 5000) => {
   for (let attempt = 0; attempt < retries; attempt++) {
-    const response = await fetch(url, options);
+    try {
+      const response = await fetch(url, options);
 
-    if (response.status === 429) {
-      console.warn(`429 Error: Retrying in ${delayMs}ms... (Attempt ${attempt + 1})`);
-      await delay(delayMs);
-      delayMs *= 2; // Increase delay exponentially (5s -> 10s -> 20s)
-    } else {
-      return response;
+      if (response.status === 429) {
+        console.warn(`429 Error: Retrying in ${delayMs / 1000} seconds... (Attempt ${attempt + 1})`);
+        await delay(delayMs);
+        delayMs *= 2; // Exponential backoff (5s → 10s → 20s)
+      } else {
+        return response;
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
     }
   }
-
   throw new Error("Too many requests. Please try again later.");
 };
 
@@ -44,24 +48,34 @@ const StyleRecommender = () => {
     setError("");
     setRecommendation("");
 
-    if (!import.meta.env.VITE_OPENAI_API_KEY) {
-      setError("API Key is missing. Make sure it's defined in the .env file.");
+    if (!API_KEY) {
+      setError("API Key is missing. Ensure it's correctly set in the .env file.");
       setLoading(false);
       return;
+    }
+
+    // Ensure all fields are filled
+    for (let key in formData) {
+      if (!formData[key]) {
+        setError("Please fill in all fields.");
+        setLoading(false);
+        return;
+      }
     }
 
     const prompt = `Suggest an outfit for a ${formData.gender} attending a ${formData.occasion} event in ${formData.weather} weather, with a ${formData.bodyType} body type, who prefers ${formData.stylePreference} style.`;
 
     try {
-      const response = await fetchWithRetry("https://api.openai.com/v1/chat/completions", {
+      const response = await fetchWithRetry(API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+          Authorization: `Bearer ${API_KEY}`,
         },
         body: JSON.stringify({
           model: "gpt-3.5-turbo",
           messages: [{ role: "user", content: prompt }],
+          max_tokens: 100, // Prevent long responses causing API errors
         }),
       });
 
@@ -119,6 +133,7 @@ const StyleRecommender = () => {
           <p>{recommendation}</p>
         </div>
       )}
+      
     </div>
   );
 };
