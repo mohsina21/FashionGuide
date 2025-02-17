@@ -1,102 +1,94 @@
-/* Recommendations.css */
-
 /* Import Cute Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Quicksand:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
 
-body {
-    font-family: 'Poppins', 'Quicksand', sans-serif;
-    background: linear-gradient(135deg, #000000, #700c6f);
-    color: #444;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    overflow-x: hidden; /* Remove horizontal scrollbar */
-}
-
-/* Recommendations Container */
+/* Main container - Centered with UP-DOWN scrolling */
 .recommendations-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
     padding: 20px;
-    background-color: #f0f0f0;
-    width: 90%;
+    background-color: #fdf0f5;
+    width: 95%;
     max-width: 1200px;
+    margin: 20px auto;
     text-align: center;
     position: relative;
-    top: 10px;
-    max-height: 80vh;
-    overflow-y: auto;
-    border-radius: 10px;
+    height: 90vh; /* Restore fixed height */
+    overflow-y: auto; /* Restore scrollbar */
+    overflow-x: hidden;
+    border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    scroll-behavior: smooth;
+    font-family: 'Poppins', sans-serif;
 }
 
-/* Title */
-.title {
-    font-size: 2em;
-    font-weight: bold;
-    color: #ff69b4; /* Pink color for headings */
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-}
-
-/* Recommendation Content */
-.recommendation-content {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
-    justify-content: center;
-}
-
-/* Option Card */
-.option-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+/* Box for each section (Concept, Key Pieces, etc.) */
+.section-box {
+    background: #ffe6ec;
+    border-radius: 15px;
     padding: 20px;
-    width: 100%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 98%;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
     text-align: left;
-    overflow: hidden;
 }
 
-/* Response Item */
-.response-item {
-    margin-bottom: 10px;
-}
-
-.response-item span {
-    display: block;
-    padding: 10px;
-    background-color: transparent; /* Transparent background for normal text */
-    border-radius: 4px;
-    color: #000; /* Black color for normal text */
-}
-
-.response-item span strong {
-    color: #ff69b4; /* Pink color for highlighted words */
-}
-
-.response-item:first-child span,
-.response-item:last-child span {
-    background-color: transparent; /* Transparent background for first and last items */
-    font-weight: bold;
-}
-
-/* Hello and Thank You */
-.hello,
-.thank-you {
-    font-size: 1.5em;
+/* Pink section headings */
+.section-title {
+    font-size: 1.6em;
     font-weight: bold;
     color: #ff69b4;
-    margin: 20px 0;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    padding: 10px 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+/* Outfit Recommendation Box */
+.outfit-box {
+    background: #fff3f8;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 25px;
+    width: 98%;
+    border-left: 8px solid #ff69b4;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Outfit Headings in PINK */
+.outfit-title {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #ff1493;
+    text-align: center;
+    text-transform: uppercase;
+    background: #ffebf2;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+/* Normal text */
+.response-item {
+    font-size: 1em;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Highlight key words in pink (only headings) */
+.category-title { /* Changed to .category-title */
+    font-weight: bold;
+    color: #ff69b4; /* Pink color for headings */
+    margin-bottom: 5px;
+}
+
+/* Hide the last box */
+.recommendations-container > .section-box:last-of-type {
+    display: none;
 }
