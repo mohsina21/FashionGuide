@@ -1,29 +1,11 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import "./StyleRecommender.css";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import Recommendations from "../Recommendations/Recommendations";
 
-const API_URL = "https://api.openai.com/v1/chat/completions";
-const API_KEY = import.meta.env.VITE_OPENAI_API_KEY; // Ensure it's securely stored in .env
-
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-const fetchWithRetry = async (url, options, retries = 3, delayMs = 5000) => {
-  for (let attempt = 0; attempt < retries; attempt++) {
-    try {
-      const response = await fetch(url, options);
-
-      if (response.status === 429) {
-        console.warn(`429 Error: Retrying in ${delayMs / 1000} seconds... (Attempt ${attempt + 1})`);
-        await delay(delayMs);
-        delayMs *= 2; // Exponential backoff (5s → 10s → 20s)
-      } else {
-        return response;
-      }
-    } catch (error) {
-      console.error("Fetch error:", error);
-    }
-  }
-  throw new Error("Too many requests. Please try again later.");
-};
+const genAI = new GoogleGenerativeAI("AIzaSyDJxy5w92Pm8ixTuFabJG3SGaMKWzIVvSg");  
+const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
 const StyleRecommender = () => {
   const [formData, setFormData] = useState({
@@ -34,9 +16,9 @@ const StyleRecommender = () => {
     stylePreference: "",
   });
 
-  const [recommendation, setRecommendation] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const history = useHistory();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -46,15 +28,8 @@ const StyleRecommender = () => {
     e.preventDefault();
     setLoading(true);
     setError("");
-    setRecommendation("");
 
-    if (!API_KEY) {
-      setError("API Key is missing. Ensure it's correctly set in the .env file.");
-      setLoading(false);
-      return;
-    }
-
-    // Ensure all fields are filled
+    // Check if all fields are filled out
     for (let key in formData) {
       if (!formData[key]) {
         setError("Please fill in all fields.");
@@ -66,29 +41,15 @@ const StyleRecommender = () => {
     const prompt = `Suggest an outfit for a ${formData.gender} attending a ${formData.occasion} event in ${formData.weather} weather, with a ${formData.bodyType} body type, who prefers ${formData.stylePreference} style.`;
 
     try {
-      const response = await fetchWithRetry(API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: "gpt-3.5-turbo",
-          messages: [{ role: "user", content: prompt }],
-          max_tokens: 100, // Prevent long responses causing API errors
-        }),
-      });
+      const result = await model.generateContent(prompt);
 
-      if (!response.ok) {
-        throw new Error(`API Error: ${response.status} - ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      if (!data.choices || data.choices.length === 0) {
+      if (!result) {
         throw new Error("No recommendation received.");
       }
 
-      setRecommendation(data.choices[0].message.content);
+      // Assuming the response contains a single text in 'result.response.text'
+      const recommendation = result.response.text();
+      history.push("/recommendations", { recommendation });
     } catch (error) {
       setError(error.message);
     } finally {
@@ -126,14 +87,6 @@ const StyleRecommender = () => {
       </form>
 
       {error && <div className="error-box">❌ {error}</div>}
-
-      {recommendation && !error && (
-        <div className="recommendation-box">
-          <h2>Recommended Outfit:</h2>
-          <p>{recommendation}</p>
-        </div>
-      )}
-      
     </div>
   );
 };

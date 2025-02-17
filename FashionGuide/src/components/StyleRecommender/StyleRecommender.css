@@ -1,3 +1,5 @@
+/* StyleRecommender.css */
+
 /* Import Cute Google Font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Quicksand:wght@400;600&display=swap');
 
@@ -100,29 +102,59 @@ input:focus, select:focus {
     transform: scale(1.05);
 }
 
-/* Recommendation Box */
+/* Error Message Box */
+.error-box {
+    background-color: #F8D7DA;
+    color: #721C24;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 20px;
+    text-align: center;
+}
+
 .recommendation-box {
-    margin-top: 15px;
+    margin-top: 20px;
     padding: 15px;
     background: rgba(255, 255, 255, 0.9);
     border-radius: 12px;
     width: 100%;
     max-width: 450px; /* Matches form width */
-    text-align: center;
+    text-align: left;
     box-shadow: 0 8px 18px rgba(255, 105, 180, 0.3);
     border: 2px solid #ff69b4;
+}
+
+.recommendation-content-small-window {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    border: 1px solid #ff69b4;
+}
+
+.option-box {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    border: 1px solid #ff69b4;
+    margin-bottom: 10px;
+}
+
+.response-item {
+    margin-bottom: 5px;
 }
 
 /* Recommendation Title */
 .recommendation-box h2 {
     font-size: 1.5rem;
     color: #ff1493;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 /* Recommendation Text */
 .recommendation-box p {
     font-size: 1.1rem;
-    font-weight: 400;
+    font-weight: 400; /* Regular text */
     color: #444;
 }

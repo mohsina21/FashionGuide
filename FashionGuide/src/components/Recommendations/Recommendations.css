@@ -1,0 +1,74 @@
+/* Recommendations.css */
+
+/* Import Cute Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Quicksand:wght@400;600&display=swap');
+
+body {
+    font-family: 'Poppins', 'Quicksand', sans-serif;
+    background: linear-gradient(135deg, #000000, #700c6f);
+    color: #444;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Recommendations Container */
+.recommendations-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    position: relative;
+    top: 10px;
+}
+
+/* Title */
+.title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ff69b4;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+/* Recommendation Content */
+.recommendation-content-small-window {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    border: 1px solid #ff69b4;
+}
+
+.option-box {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    border: 1px solid #ff69b4;
+    margin-bottom: 10px;
+}
+
+.response-item {
+    margin-bottom: 5px;
+}
+
+/* Recommendation Title */
+.recommendations-container h2 {
+    font-size: 1.5rem;
+    color: #ff1493;
+    margin-bottom: 10px;
+}
+
+/* Recommendation Text */
+.recommendations-container p {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #444;
+}

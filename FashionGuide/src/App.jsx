@@ -1,14 +1,17 @@
-import { Routes, Route } from "react-router-dom";
-import Home from "./components/Home/Home";
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import StyleRecommender from "./components/StyleRecommender/StyleRecommender";
+import Recommendations from "./components/Recommendations/Recommendations";
 
-function App() {
+const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/style-recommendation" element={<StyleRecommender />} />
-    </Routes>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={StyleRecommender} />
+        <Route path="/recommendations" component={Recommendations} />
+      </Switch>
+    </Router>
   );
-}
+};
 
 export default App;
