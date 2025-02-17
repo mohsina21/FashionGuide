@@ -22,7 +22,7 @@ body {
     align-items: center;
     justify-content: center;
     width: 100%;
-    max-width: 500px;
+    max-width: 800px;
     text-align: center;
     position: relative;
     top: 10px;
@@ -38,36 +38,39 @@ body {
 }
 
 /* Recommendation Content */
-.recommendation-content-small-window {
-    max-height: 300px;
+.recommendation-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    max-height: 500px;
     overflow-y: auto;
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 8px;
-    border: 1px solid #ff69b4;
 }
 
-.option-box {
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 8px;
-    border: 1px solid #ff69b4;
-    margin-bottom: 10px;
+.option-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    padding: 20px;
+    width: 100%;
+    max-width: 350px;
+    box-shadow: 0 8px 18px rgba(255, 105, 180, 0.3);
+    border: 2px solid #ff69b4;
+    text-align: left;
 }
 
 .response-item {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 /* Recommendation Title */
-.recommendations-container h2 {
+.option-card h2 {
     font-size: 1.5rem;
     color: #ff1493;
     margin-bottom: 10px;
 }
 
 /* Recommendation Text */
-.recommendations-container p {
+.option-card p {
     font-size: 1.1rem;
     font-weight: 400;
     color: #444;

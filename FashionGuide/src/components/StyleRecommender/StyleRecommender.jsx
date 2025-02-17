@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./StyleRecommender.css";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import Recommendations from "../Recommendations/Recommendations";
@@ -18,7 +18,7 @@ const StyleRecommender = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -49,7 +49,7 @@ const StyleRecommender = () => {
 
       // Assuming the response contains a single text in 'result.response.text'
       const recommendation = result.response.text();
-      history.push("/recommendations", { recommendation });
+      navigate("/recommendations", { state: { recommendation } });
     } catch (error) {
       setError(error.message);
     } finally {
